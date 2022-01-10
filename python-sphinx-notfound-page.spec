@@ -7,7 +7,7 @@
 
 Name:           python-%{pypi_name}
 Version:        0.6
-Release:        1
+Release:        2
 Summary:        Create a custom 404 page with absolute URLs hardcoded
 
 License:        MIT
@@ -17,6 +17,7 @@ Source0:        https://github.com/%{project_owner}/%{github_name}/archive/%{ver
 # Fix compatibility with Sphinx 3.4
 # Resolved upstream: https://github.com/readthedocs/sphinx-notfound-page/pull/127
 Patch0:         sphinx-3.4-compatibility.patch
+Patch1:         0001-fix-testcase-url-content-mismatch-error.patch
 
 BuildArch:      noarch
 
@@ -51,7 +52,7 @@ Requires:       python%{python3_pkgversion}-sphinx
 %py3_install
 
 %check
-PYTHONPATH="$(pwd)" py.test-%{python3_version} -v .
+PYTHONPATH=$PWD py.test-%{python3_version} -v .
 
 %files -n python%{python3_pkgversion}-%{pypi_name}
 %license LICENSE
@@ -60,6 +61,9 @@ PYTHONPATH="$(pwd)" py.test-%{python3_version} -v .
 %{python3_sitelib}/%{importname}/
 
 %changelog
+* Mon Jan 10 2021 Ge Wang <wangge20@huawei.com> - 0.6-2
+- Fix testcase url content mismatch error
+
 * Wed Jul 07 2021 wangdi <wangdi@kylinos.cn> - 0.6-1
 - Init package
 
